@@ -525,4 +525,31 @@ public class main {
 
         return count;
     }
+
+    public static int longestConsecutive(int[] nums)
+    {
+        if(nums.length==0 || nums == null) return 0;
+        Set<Integer> sets = new HashSet<>();
+        for(int i: nums) sets.add(i);
+        int max = 1;
+        for(int i=0;i<nums.length;i++)
+        {
+            int count = 1;
+            int num = nums[i];
+            while(sets.contains(--num))
+            {
+                count++;
+                sets.remove(num);
+            }
+
+            num = nums[i];
+            while(sets.contains(++num))
+            {
+                count++;
+                sets.remove(num);
+            }
+            max = Math.max(max,count);
+        }
+        return max;
+    }
 }
