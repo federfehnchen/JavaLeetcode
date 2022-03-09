@@ -545,4 +545,28 @@ public class main {
         }
         return maxCount+1;
     }
+
+    public static List<List<Integer>> combinationSum(int[] nums, int target)
+    {
+        List<List<Integer>> retList = new ArrayList<>();
+        combinationSumHelper(nums, target, new ArrayList<>(), retList, 0);
+        return retList;
+    }
+
+    public static void combinationSumHelper(int[] nums, int target, List<Integer> curr, List<List<Integer>> retList, int currPos)
+    {
+        if(target<0) return;
+        if(target==0) {retList.add(new ArrayList<>(curr)); return;}
+        else
+        {
+            for(;currPos<nums.length;currPos++)
+                {
+                    curr.add(nums[currPos]);
+                    combinationSumHelper(nums,target-nums[currPos],curr,retList, currPos);
+                    curr.remove(curr.size()-1);
+
+                }
+        }
+        return;
+    }
 }
