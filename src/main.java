@@ -637,11 +637,15 @@ public class main {
         if(!isFreqEqual(s1,s2)) return false;
         for(int i=0;i<s1.length();i++)
         {
-            isScrambleHelper(s1.substring(0,i),s2.substring(0,i));
-            isScrambleHelper(s1.substring(i+1,len-1),s2.substring(i+1,len-1));
 
-            isScrambleHelper(s1.substring(0,i),s2.substring(len-1-i));
-            isScrambleHelper(s1.substring(i+1),s2.substring(0,i));
+            if(
+            (isScrambleHelper(s1.substring(0,i),s2.substring(0,i)) &&
+                isScrambleHelper(s1.substring(i+1,len-1),s2.substring(i+1,len-1)))
+            ||
+                    (isScrambleHelper(s1.substring(0,i),s2.substring(len-1-i)) &&
+                            isScrambleHelper(s1.substring(i+1),s2.substring(0,i))))
+                return true;
+
         }
 
 
