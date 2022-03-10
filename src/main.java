@@ -4,7 +4,12 @@ public class main {
 
     public static void main(String[] args) {
 
-        System.out.println(hammingWeight(3));
+        int[] nums = {1,3,2};
+        nextPermutation(nums);
+        for(int i:nums)
+        {
+            System.out.println(i);
+        }
 
     }
 
@@ -569,4 +574,33 @@ public class main {
         }
         return;
     }
+
+    public static void nextPermutation(int[] nums)
+        {
+            int pivot = -1;
+            int tempVal = -1;
+            int swap = 0;
+
+            for(int i=nums.length-2;i>=0;i--)
+            {
+                if(nums[i]>=nums[i+1]) continue;
+                pivot = i;
+                tempVal = nums[pivot];
+                System.out.println(pivot);
+                break;
+            }
+            if(pivot==-1) {Arrays.sort(nums); return;}
+            for(int i=nums.length-1;i>pivot;i--)
+            {
+                if(nums[i]>tempVal) {nums[pivot]=nums[i]; nums[i]=tempVal; break;}
+            }
+            for(int i=1;pivot+i<=pivot+(nums.length-pivot)/2;i++)
+            {
+                swap = nums[pivot+i];
+                nums[pivot+i] = nums[nums.length-i];
+                nums[nums.length-i] = swap;
+
+            }
+            return;
+        }
 }
