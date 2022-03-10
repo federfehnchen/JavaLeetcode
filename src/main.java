@@ -623,4 +623,43 @@ public class main {
         nums[i] = nums[j];
         nums[j] = temp;
     }
+
+    public static boolean isScramble(String s1, String s2)
+    {
+        if(s1.length()!=s2.length()) return false;
+        return isScrambleHelper(s1, s2);
+    }
+
+    private static boolean isScrambleHelper(String s1, String s2)
+    {
+        int len = s1.length();
+        if(s1 == s2) return true;
+        if(!isFreqEqual(s1,s2)) return false;
+        for(int i=0;i<s1.length();i++)
+        {
+            isScrambleHelper(s1.substring(0,i),s2.substring(0,i));
+            isScrambleHelper(s1.substring(i+1,len-1),s2.substring(i+1,len-1));
+
+            isScrambleHelper(s1.substring(0,i),s2.substring(len-1-i));
+            isScrambleHelper(s1.substring(i+1),s2.substring(0,i));
+        }
+
+
+        return false;
+    }
+
+    private static boolean isFreqEqual(String s1, String s2)
+    {
+        HashMap<Character, Integer> freq = new HashMap<>();
+        for(char i:s1.toCharArray())
+        {
+            freq.put(i,(freq.get(i)!=null) ? freq.get(i)+1 : 1);
+        }
+        for(char i:s2.toCharArray())
+        {
+            if(freq.get(i)==null || freq.get(i)==0) return false;
+            else freq.put(i, freq.get(i)-1);
+        }
+        return true;
+    }
 }
