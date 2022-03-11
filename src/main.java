@@ -3,10 +3,7 @@ import java.util.*;
 public class main {
 
     public static void main(String[] args) {
-
-        int[] nums = {0,1,2};
-        System.out.println(firstMissingPositive(nums));
-
+        System.out.println(isScramble("abc", "bca"));
     }
 
     public static double findMedianSortedArrays(int[] arr1, int[] arr2) {
@@ -632,23 +629,23 @@ public class main {
 
     private static boolean isScrambleHelper(String s1, String s2)
     {
+        //System.out.println(s1 + " = " + s2);
+        if(s1.length()!=s2.length()) return false;
         int len = s1.length();
-        if(s1 == s2) return true;
+        if(s1.equals(s2)) return true;
         if(!isFreqEqual(s1,s2)) return false;
-        for(int i=0;i<s1.length();i++)
+        for(int i=1;i<s1.length();i++)
         {
 
             if(
             (isScrambleHelper(s1.substring(0,i),s2.substring(0,i)) &&
-                isScrambleHelper(s1.substring(i+1,len-1),s2.substring(i+1,len-1)))
-            ||
-                    (isScrambleHelper(s1.substring(0,i),s2.substring(len-1-i)) &&
-                            isScrambleHelper(s1.substring(i+1),s2.substring(0,i))))
-                return true;
-
+                isScrambleHelper(s1.substring(i),s2.substring(i))))
+            {return true;}
+            if(
+                    isScrambleHelper(s1.substring(0,i),s2.substring(len-i)) &&
+                            isScrambleHelper(s1.substring(i),s2.substring(0,len-i)))
+            {return true;}
         }
-
-
         return false;
     }
 
