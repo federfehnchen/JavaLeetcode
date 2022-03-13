@@ -3,7 +3,8 @@ import java.util.*;
 public class main {
 
     public static void main(String[] args) {
-        System.out.println(isScramble("abc", "bca"));
+        String[] strs = {"ab","a"};
+        System.out.println(longestCommonPrefix(strs));
     }
 
     public static double findMedianSortedArrays(int[] arr1, int[] arr2) {
@@ -629,7 +630,6 @@ public class main {
 
     private static boolean isScrambleHelper(String s1, String s2)
     {
-        //System.out.println(s1 + " = " + s2);
         if(s1.length()!=s2.length()) return false;
         int len = s1.length();
         if(s1.equals(s2)) return true;
@@ -662,5 +662,58 @@ public class main {
             else freq.put(i, freq.get(i)-1);
         }
         return true;
+    }
+
+    public static String longestCommonPrefix(String[] strs)
+    {
+        if(strs.length==1) return strs[0];
+        String retString = "";
+        boolean breaker = false;
+        for(int i=0;i<strs[0].length();i++)
+        {
+            int a=1;
+            for(;a<strs.length;a++)
+            {
+                if((strs[a].length()<=i || strs[a-1].length()<=i) || (!(strs[a].charAt(i)==strs[a-1].charAt(i))))
+                {
+                    breaker=true;
+                    break;
+                }
+
+            }
+            if(breaker)
+            {
+                break;
+            }
+            else{retString=strs[0].substring(0,i+1);}
+
+        }
+        return retString;
+    }
+
+    public static String longestPalindrome(String s)
+    {
+        String retStr = "";
+        int max=0;
+        char[] chrArr = new char[s.length()*2+1];
+        for(int i=0;i<chrArr.length;i++)
+        {
+            if(i%2==0){chrArr[i]='#';}
+            else{chrArr[i]=s.charAt(i/2);}
+        }
+
+        for(int i=0;i<chrArr.length;i++)
+        {
+            for(int j=0;i-j>=0 && j+i<chrArr.length;j++)
+            {
+                if(chrArr[i-j]!=chrArr[i+j])
+                {
+                    if(j>max) {max = j; retStr=s.substring(i-j/2,1+i+j/2);}
+                    break;
+                }
+
+            }
+        }
+        return retStr;
     }
 }
