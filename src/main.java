@@ -3,8 +3,17 @@ import java.util.*;
 public class main {
 
     public static void main(String[] args) {
-        String str = "abb";
-        System.out.println(longestPalindrome(str));
+        int[][] neu = {{0,1,2},{3,4,5},{6,7,8}};
+        rotate(neu);
+        for(int i=0;i<neu.length;i++)
+        {
+            for(int j=0;j<neu.length;j++)
+            {
+                System.out.println(neu[i][j]);
+
+            }
+
+        }
     }
 
     public static double findMedianSortedArrays(int[] arr1, int[] arr2) {
@@ -714,5 +723,30 @@ public class main {
             lo = j + 1;
             maxLen = k - j - 1;
         }
+    }
+
+    public static void rotate(int[][] matrix)
+    {
+        int n= matrix.length-1;
+        int l=0;
+        int r=n-1;
+        while(l<=r)
+        {
+            for(int i=l;i<=r;i++)
+            {
+                rotateSwap(matrix,n-i,l,n-l,n-i);
+                rotateSwap(matrix,n-l,n-i,i,n-l);
+                rotateSwap(matrix,i,n-l,l,i);
+            }
+            l++;
+            r--;
+        }
+    }
+
+    public static void rotateSwap(int[][] matrix,int pos1, int pos2, int pos3, int pos4)
+    {
+        int zws = matrix[pos1][pos2];
+        matrix[pos1][pos2]=matrix[pos3][pos4];
+        matrix[pos3][pos4]=zws;
     }
 }
