@@ -3,8 +3,8 @@ import java.util.*;
 public class main {
 
     public static void main(String[] args) {
-        String[] strs = {"ab","a"};
-        System.out.println(longestCommonPrefix(strs));
+        String str = "abb";
+        System.out.println(longestPalindrome(str));
     }
 
     public static double findMedianSortedArrays(int[] arr1, int[] arr2) {
@@ -691,29 +691,28 @@ public class main {
         return retString;
     }
 
-    public static String longestPalindrome(String s)
-    {
-        String retStr = "";
-        int max=0;
-        char[] chrArr = new char[s.length()*2+1];
-        for(int i=0;i<chrArr.length;i++)
-        {
-            if(i%2==0){chrArr[i]='#';}
-            else{chrArr[i]=s.charAt(i/2);}
-        }
+    private static int lo, maxLen;
 
-        for(int i=0;i<chrArr.length;i++)
-        {
-            for(int j=0;i-j>=0 && j+i<chrArr.length;j++)
-            {
-                if(chrArr[i-j]!=chrArr[i+j])
-                {
-                    if(j>max) {max = j; retStr=s.substring(i-j/2,1+i+j/2);}
-                    break;
-                }
+    public static String longestPalindrome(String s) {
+        int len = s.length();
+        if (len < 2)
+            return s;
 
-            }
+        for (int i = 0; i < len-1; i++) {
+            extendPalindrome(s, i, i);  //assume odd length, try to extend Palindrome as possible
+            extendPalindrome(s, i, i+1); //assume even length.
         }
-        return retStr;
+        return s.substring(lo, lo + maxLen);
+    }
+
+    private static void extendPalindrome(String s, int j, int k) {
+        while (j >= 0 && k < s.length() && s.charAt(j) == s.charAt(k)) {
+            j--;
+            k++;
+        }
+        if (maxLen < k - j - 1) {
+            lo = j + 1;
+            maxLen = k - j - 1;
+        }
     }
 }
