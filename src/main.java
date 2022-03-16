@@ -749,4 +749,61 @@ public class main {
         matrix[pos1][pos2]=matrix[pos3][pos4];
         matrix[pos3][pos4]=zws;
     }
-}
+    public static int findJudge(int n, int[][] trust) {
+        int[] trusted = new int[n-1];
+
+        for(int i=0;i<trust.length;i++)
+        {
+            trusted[trust[i][0]]++;
+            trusted[trust[i][1]]--;
+
+        }
+        for(int i=0;i<trusted.length;i++)
+        {
+            if(trusted[i]!=0) return i;
+        }
+
+        return -1;
+    }
+
+    public static int findCenter(int[][] edges)
+    {
+        if(edges[0][0]==edges[1][0]) return edges[0][0];
+        if(edges[0][1]==edges[1][0]) return edges[0][1];
+        return edges[1][1];
+    }
+
+    public static boolean validPath(int n, int[][] edges, int source, int destination)
+    {
+        ArrayList<Edge>[] graph = new ArrayList[n];
+
+        for(int i=0;i<n;i++)
+        {
+            graph[i] = new ArrayList<Edge>();
+        }
+
+        for(int i=0;i< edges.length;i++)
+        {
+            int v1 = edges[i][0];
+            int v2 = edges[i][1];
+
+            graph[v1].add(new Edge(v1,v2));
+            graph[v2].add(new Edge(v2,v1));
+        }
+
+        boolean[] visited = new boolean[n];
+
+        return validPathDFS(source, destination, visited, graph);
+    }
+
+    public static boolean validPathDFS(int source, int dest, boolean[] visited, ArrayList<Edge>[] graph)
+    {
+        if(source==dest) return true;
+        visited[source] = true;
+        for(int i=0;i<graph[source].size();i++)
+        {
+            if(!visited[graph[source].get(i).to]) validPathDFS(graph[source].get(i).to, dest, visited, graph);
+        }
+        return false;
+    }
+    }
