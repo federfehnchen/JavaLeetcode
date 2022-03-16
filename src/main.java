@@ -775,11 +775,11 @@ public class main {
 
     public static boolean validPath(int n, int[][] edges, int source, int destination)
     {
-        ArrayList<Edge>[] graph = new ArrayList[n];
+        ArrayList<Integer>[] graph = new ArrayList[n];
 
         for(int i=0;i<n;i++)
         {
-            graph[i] = new ArrayList<Edge>();
+            graph[i] = new ArrayList<Integer>();
         }
 
         for(int i=0;i< edges.length;i++)
@@ -787,8 +787,8 @@ public class main {
             int v1 = edges[i][0];
             int v2 = edges[i][1];
 
-            graph[v1].add(new Edge(v1,v2));
-            graph[v2].add(new Edge(v2,v1));
+            graph[v1].add(v2);
+            graph[v2].add(v1);
         }
 
         boolean[] visited = new boolean[n];
@@ -796,13 +796,13 @@ public class main {
         return validPathDFS(source, destination, visited, graph);
     }
 
-    public static boolean validPathDFS(int source, int dest, boolean[] visited, ArrayList<Edge>[] graph)
+    public static boolean validPathDFS(int source, int dest, boolean[] visited, ArrayList<Integer>[] graph)
     {
         if(source==dest) return true;
         visited[source] = true;
         for(int i=0;i<graph[source].size();i++)
         {
-            if(!visited[graph[source].get(i).to]) validPathDFS(graph[source].get(i).to, dest, visited, graph);
+            if(!visited[graph[source].get(i)]) if(validPathDFS(graph[source].get(i), dest, visited, graph)) return true;
         }
         return false;
     }
